@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,4 +17,41 @@
         <input type="submit" value="Join Room">
     </form>
 </body>
-</html>
+</html> -->
+
+<%- include('./partials/header') %>
+
+<section class="hero is-medium">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h2 class="title">
+          ASSASSINS
+        </h2>
+      </div>
+    </div>
+  </section>
+<section class="user-card">
+    
+    <div class="container" style="max-width: 50%;">
+        <div style="text-align: center;">
+            <a href="/createRoom" class="button is-info is-large">Create a new Room</a>
+        </div>
+        <hr>
+        <form action="/joinRoom" method="POST">
+            <h2 class="subtitle">Join an existing Room</h2>
+            <div class="field is-grouped">
+                <p class="control is-expanded">
+                    <input class="input" type="text" name="username" placeholder="Username">
+                </p>
+                <p class="control is-expanded">
+                    <input class="input" type="text" name="roomCode" placeholder="Room Code">
+                </p>
+                <p class="control">
+                    <button class="button is-primary">
+                        Join
+                    </button>
+                </p>
+            </div>
+        </form>
+    </div>
+</section>

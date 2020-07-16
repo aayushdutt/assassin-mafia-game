@@ -10,25 +10,27 @@
 </section>
 <section class="user-card">
     <div class="container">
-        psps <%= participants %>
-        rdatra <%= roomData %>
-        self <%= self %>
+        <% roomData.status.forEach(statusLine => { %>
+         <div><%=statusLine%></div>
+        <% }) %>
         <h2 class="subtitle">ALIVE</h2>
         <div class="columns is-multiline">
             <% participants.forEach(participant => { %>
-            <% if(!participant.isKilled) { %>
-            <%- include('./partials/userCard', {participant}) %>
-            <% } %>
-        <%})%>
-        </div>
-        <hr>
-
+                <% if(!participant.isKilled) { %>
+                    <%- include('./partials/userCard', {participant}) %>
+                    <% } %>
+                    <%})%>
+                </div>
+                <hr>
+                
         <h2 class="subtitle dead">DEAD</h2>
-        <%participants.forEach(participant => {%>
-        <%if(participant.isKilled) {%>
-        <%- include('./partials/killedUserCard', {participant}) %>
-        <%}%>
-        <%})%>
+        <div class="columns is-multiline">
+            <%participants.forEach(participant => {%>
+            <%if(participant.isKilled) {%>
+            <%- include('./partials/killedUserCard', {participant}) %>
+            <%}%>
+            <%})%>
+        </div>
 
     </div>
     </div>

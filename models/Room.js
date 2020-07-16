@@ -6,8 +6,9 @@ var roomSchema = new mongoose.Schema({
     roomKey: Number,
     roomStatus: String,
     acceptingParticipants: { type: Boolean, default: true },
+    rolesAssigned: { type: Boolean, default: false },
     isPlaying: { type: Boolean, default: false },
-    rolesAssigned: { type: Boolean, default: false }
+    status: [String]
 })
 
 module.exports = mongoose.model("Room", roomSchema)

@@ -12,6 +12,7 @@ const { authenticateAdmin } = require('./middlewares');
 mongoose.connect('mongodb://localhost:27017/assassin', { useNewUrlParser: true, useUnifiedTopology: true }, function () {
   console.log("MongoDB Connected")
 });
+mongoose.Promise = Promise;
 
 app.set("view engine", "ejs")
 app.use(cookieParser());
@@ -19,11 +20,11 @@ app.use(express.static(__dirname + "/public"))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-  return res.render('index')
+  return res.render('index', {title: "Assassin Online Game"})
 })
 
 
-app.post('/createRoom', (req, res) => {
+app.get('/createRoom', (req, res) => {
   let roomCode = Math.floor(Math.random() * 100000)
   const roomKey = Math.floor(Math.random() * 10000000)
 
@@ -39,7 +40,7 @@ app.post('/createRoom', (req, res) => {
       acceptingParticipants: true,
       isPlaying: false
     }
-    // TODO: add option for password protecting
+    // TODO: add option for password protecting room
   
     Room.create(newRoom, (err, createdRoom) => {
       if (err) return res.send('An error occurred')
@@ -86,13 +87,6 @@ app.post('/joinRoom', (req, res) => {
 app.use('/room', roomRoutes)
 app.use('/roomAdmin', roomAdminRoutes)
 
-//reset participants
-//allow votes
-//allow joiners
-//vote
-//reveal
-//kill
-//removeUser
 const listenPort = process.env.PORT || 8080
 app.listen(listenPort, () => {
   console.log(`Server running on http://localhost:${listenPort}`)

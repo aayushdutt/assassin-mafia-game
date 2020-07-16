@@ -1,19 +1,17 @@
-<div class="columns is-multiline">
-    <div class="column post is-3">
-        <article class="columns is-multiline">
-            <div class="column is-12 post-img">
-                <img src="https://api.adorable.io/avatars/82/<%=participant.username%>.png" />
-            </div>
-            <div class="column is-12 featured-content">
-                <h3 class="heading post-category"><%=participant.role%> |
-                    <%if(participant.isAssassinated) {%>
-                    Assassinated
-                    <%} else {%>
-                    Killed
-                    <%}%>
-                </h3>
-                <h1 class="title post-title"><%=participant.username%></h1>
-            </div>
-        </article>
-    </div>
+<div class="column post is-3">
+    <article class="columns is-multiline">
+        <div class="column is-12 post-img">
+            <img src="https://api.adorable.io/avatars/82/<%=participant.username%>.png" />
+        </div>
+        <div class="column is-12 featured-content">
+            <h3 class="heading post-category"><%=participant.role%> |
+                <%if(participant.isAssassinated) {%>
+                Assassinated
+                <%} else {%>
+                Killed
+                <%}%>
+            </h3>
+            <h1 class="title post-title"><%=participant.username%></h1>
+        </div>
+    </article>
 </div>

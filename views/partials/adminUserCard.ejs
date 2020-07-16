@@ -6,7 +6,7 @@
       <div class="column is-12 featured-content">
         <h3 class="heading post-category"><%=participant.role%></h3>
         <h3 class="heading post-category">Votes: <%=participant.votesRecieved%></h3>
-        <% if (!participant.canAssassinate && !participant.canVote && !participant.canReveal) { %>
+        <% if (!participant.canPlay) { %>
           <h3 class="heading post-category">Turn Played</h3>
         <% } %>
         <% if (participant.isAssassinated) { %>

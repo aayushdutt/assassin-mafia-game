@@ -10,9 +10,7 @@ var userSchema = new mongoose.Schema({
         ref: "Room"
     },
     votesRecieved: { type: Number, default: 0 },
-    canVote: { type: Boolean, default: false },
-    canAssassinate: { type: Boolean, default: false },
-    canReveal: { type: Boolean, default: false },
+    canPlay: { type: Boolean, default: false },
     isKilled: { type: Boolean, default: false },
     isRevealed: { type: Boolean, default: false },
     isAssassinated: { type: Boolean, default: false }

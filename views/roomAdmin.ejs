@@ -11,18 +11,18 @@
 </section>
 <section class="user-card">
     <div class="container">
-        <% if (!roomData.rolesAssigned) { %>
-            <form action="/assignRoles" method="POST" style="width: 50%; margin-bottom: 30px;">
+        <% if (true || !roomData.rolesAssigned) { %>
+            <form action="/roomAdmin/assignRoles" method="POST" style="width: 50%; margin-bottom: 30px;">
                 <div class="field is-grouped">
                     <p class="control is-expanded">
-                        <input class="input" type="text" name="assassins" placeholder="No of Assassins">
+                        <input class="input" type="number" name="assassins" required placeholder="No of Assassins">
                     </p>
                     <p class="control is-expanded">
-                        <input class="input" type="text" name="seers" placeholder="No of Seers">
+                        <input class="input" type="number" name="seers" required placeholder="No of Seers">
                     </p>
                     <p class="control">
                         <button class="button is-primary">
-                        Assign Roles
+                            Assign Roles
                         </button>
                     </p>
                 </div>
@@ -31,9 +31,18 @@
              
         <div class="columns">
             <% if (roomData.isPlaying) { %>
-                <a href="/getResults" class='button is-primary column' style="margin: 10px">Get Results</a>
+                <a href="/roomAdmin/getResults" class='button is-primary column' style="margin: 10px">Get Results</a>
             <%  } else { %>    
-                <a href="/startRound" class='button is-primary column' style="margin: 10px">Start Round</a>
+                <% if (roomData.rolesAssigned) { %>
+                    <a href="/roomAdmin/startRound" class='button is-primary column' style="margin: 10px">Start Round</a>
+                <% } else { %>
+                    <a href="/roomAdmin/startRound" class='button disabled is-primary column' disabled style="margin: 10px">Start Round</a>
+                <% } %>
+            <%}%>
+            <% if (roomData.acceptingParticipants) { %>
+                <a href="/roomAdmin/closeRoom" class='button is-primary column' style="margin: 10px">Close Room</a>
+            <%  } else { %>    
+                <a href="/roomAdmin/openRoom" class='button is-primary column' style="margin: 10px">Open Room</a>
             <%}%>
             <!-- <button class='button is-primary column' style="margin: 10px">Show Roles</button> -->
         </div>
@@ -48,11 +57,13 @@
         <hr>
 
         <h2 class="subtitle dead">DEAD</h2>
-        <%participants.forEach(participant => {%>
-        <%if(participant.isKilled) {%>
-        <%- include('./partials/adminUserCard', {participant}) %>
-        <%}%>
-        <%})%>
+        <div class="columns is-multiline">
+            <%participants.forEach(participant => {%>
+            <%if(participant.isKilled) {%>
+            <%- include('./partials/adminUserCard', {participant}) %>
+            <%}%>
+            <%})%>
+        </div>
 
     </div>
     </div>

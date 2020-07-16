@@ -25,4 +25,13 @@ const authenticateUser = (req, res, next) => {
     })
 }
 
-module.exports = {authenticateAdmin, authenticateUser}
+const roomIsPlaying = (req, res, next) => {
+    const {roomId} = req.cookies
+    Room.findById(roomId, (err, foundRoom) => {
+        if(foundRoom.isPlaying) {
+            return next()
+        }
+    })
+}
+
+module.exports = {authenticateAdmin, authenticateUser, roomIsPlaying}
