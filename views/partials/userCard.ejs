@@ -1,0 +1,31 @@
+<div class="column post is-3">
+  <article class="columns is-multiline">
+    <div class="column is-12 post-img">
+      <img src="https://api.adorable.io/avatars/82/<%=participant.username%>.png" />
+    </div>
+    <div class="column is-12 featured-content">
+      <% if (self._id == participant._id || self.role === 'assassin' && participant.role === 'assassin' || self.role === 'seer' && participant.isRevealed) { %>
+        <h3 class="heading post-category"><%=participant.role%></h3>
+      <% } %>
+      <h1 class="title post-title"><%=participant.username%></h1>
+      <a href="/vote/<%=participant._id%>" disabled class="button is-primary disabled">Vote</a>
+
+      <% if(self.role === 'villager') { %>
+      <a href="/vote/<%=participant._id%>" <% if(roomData.isPlaying) { %> class="button is-primary">Vote</a>
+          <% } else {%>
+          class="button is-primary disabled" disabled>Vote</a>
+          <% }%>
+      <% } else if(self.role === 'seer') { %>
+      <a href="/reveal/<%=participant._id%>" <% if(roomData.isPlaying) { %> class="button is-primary">Reveal</a>
+          <% } else {%>
+          class="button is-primary disabled" disabled>Vote</a>
+          <% }%>
+      <% } else if(self.role === 'assassin') { %>
+      <a href="/assassinate/<%=participant._id%>" <% if(roomData.isPlaying) { %> class="button is-primary">Assassinate</a>
+          <% } else {%>
+          class="button is-primary disabled" disabled>Vote</a>
+          <% }%>
+      <% } %>
+    </div>
+  </article>
+</div>
