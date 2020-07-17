@@ -114,7 +114,8 @@ router.get('/getResults', authenticateAdmin, (req, res) => {
         let maxVoted = participants[0]
         let maxVotes = participants[0].votesRecieved
         let isDraw = false
-        participants.forEach(participant => {
+        participants.forEach((participant, idx) => {
+            if(idx === 0) return
             if(participant.isAssassinated && !participant.isKilled) {
                 participant.isKilled = true
                 assassinated.push(participant)

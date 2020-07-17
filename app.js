@@ -7,7 +7,6 @@ const Room = require('./models/Room');
 const User = require('./models/User');
 const roomRoutes = require('./routes/room');
 const roomAdminRoutes = require('./routes/roomAdmin');
-const { authenticateAdmin } = require('./middlewares');
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://mongo:27017/assassin', { useNewUrlParser: true, useUnifiedTopology: true }, function () {
   console.log("MongoDB Connected")
@@ -25,6 +24,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/createRoom', (req, res) => {
+  console.log(req)
   let roomCode = Math.floor(Math.random() * 100000)
   const roomKey = Math.floor(Math.random() * 10000000)
 
@@ -40,7 +40,6 @@ app.get('/createRoom', (req, res) => {
       acceptingParticipants: true,
       isPlaying: false
     }
-    // TODO: add option for password protecting room
   
     Room.create(newRoom, (err, createdRoom) => {
       if (err) return res.send('An error occurred')
@@ -86,6 +85,8 @@ app.post('/joinRoom', (req, res) => {
 
 app.use('/room', roomRoutes)
 app.use('/roomAdmin', roomAdminRoutes)
+
+// TODO: reset room, auto delete room, optional password for room
 
 const listenPort = process.env.PORT || 8080
 app.listen(listenPort, () => {
