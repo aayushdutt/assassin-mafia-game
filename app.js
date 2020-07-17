@@ -9,7 +9,7 @@ const roomRoutes = require('./routes/room');
 const roomAdminRoutes = require('./routes/roomAdmin');
 const { authenticateAdmin } = require('./middlewares');
 
-mongoose.connect('mongodb://localhost:27017/assassin', { useNewUrlParser: true, useUnifiedTopology: true }, function () {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://mongo:27017/assassin', { useNewUrlParser: true, useUnifiedTopology: true }, function () {
   console.log("MongoDB Connected")
 });
 mongoose.Promise = Promise;
