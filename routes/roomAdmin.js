@@ -43,7 +43,6 @@ router.post('/assignRoles', authenticateAdmin, (req, res) => {
 
     User.find({ roomId: roomId })
     .then((participants) => {
-        console.log(participants)
         if(seers + assassins > participants) {
             return res.send("not enough participants")
         }

@@ -8,7 +8,7 @@ const User = require('./models/User');
 const roomRoutes = require('./routes/room');
 const roomAdminRoutes = require('./routes/roomAdmin');
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://mongo:27017/assassin', { useNewUrlParser: true, useUnifiedTopology: true }, function () {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/assassin', { useNewUrlParser: true, useUnifiedTopology: true }, function () {
   console.log("MongoDB Connected")
 });
 mongoose.Promise = Promise;
@@ -24,15 +24,13 @@ app.get('/', (req, res) => {
 
 
 app.get('/createRoom', (req, res) => {
-  console.log(req)
   let roomCode = Math.floor(Math.random() * 100000)
   const roomKey = Math.floor(Math.random() * 10000000)
-
+  
   // Check if room already exists
   Room.findOne({ roomCode }, (err, foundRoom) => {
-    console.log(foundRoom)
     if (err || foundRoom) return res.send("Please try again...")
-
+    
     const newRoom = {
       roomCode,
       participants: [],
@@ -40,9 +38,10 @@ app.get('/createRoom', (req, res) => {
       acceptingParticipants: true,
       isPlaying: false
     }
-  
+    
     Room.create(newRoom, (err, createdRoom) => {
       if (err) return res.send('An error occurred')
+      console.log(`Room Created: ${roomCode}`)
       // TODO: set timeout to delete room after 150 mins
       res.cookie('roomId', createdRoom._id, { expires: new Date(Date.now() + 9000000) });
       res.cookie('roomKey', roomKey, { expires: new Date(Date.now() + 9000000) });
@@ -62,6 +61,8 @@ app.post('/joinRoom', (req, res) => {
 
     User.findOne({ username, roomCode }, (err, foundUser) => {
       if (err) return res.send("Internal Server Error")
+      const {userSecret} = req.cookies
+      if(userSecret === foundUser.userSecret) return res.redirect('/room')
       if (foundUser) return res.send("User already exists in this room")
 
       const newUser = {
@@ -73,6 +74,7 @@ app.post('/joinRoom', (req, res) => {
 
       User.create(newUser, (err, createdUser) => {
         if (err) return res.send("Internal Server Error")
+        console.log(`${username} joined room ${roomCode}`)
         res.cookie('username', username, { expires: new Date(Date.now() + 9000000) });
         res.cookie('userSecret', createdUser.userSecret, { expires: new Date(Date.now() + 9000000) });
         res.cookie('roomId', foundRoom._id, { expires: new Date(Date.now() + 9000000) });

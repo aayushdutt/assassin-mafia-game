@@ -15,8 +15,7 @@ router.get('/', authenticateUser, (req, res) => {
             participants.forEach(participant => {
                 if(participant._id == userId) {self = participant; return;}
             })
-            console.log(self)
-            
+    
             return res.render('room', {participants, roomData, self, title: "Assassination Room"})
         })
     })
