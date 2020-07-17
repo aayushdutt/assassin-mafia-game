@@ -61,9 +61,11 @@ app.post('/joinRoom', (req, res) => {
 
     User.findOne({ username, roomCode }, (err, foundUser) => {
       if (err) return res.send("Internal Server Error")
-      const {userSecret} = req.cookies
-      if(userSecret === foundUser.userSecret) return res.redirect('/room')
-      if (foundUser) return res.send("User already exists in this room")
+      if (foundUser) {
+        const {userSecret} = req.cookies
+        if(userSecret && userSecret === foundUser.userSecret) return res.redirect('/room')
+        return res.send("User already exists in this room")
+      }
 
       const newUser = {
         username,
