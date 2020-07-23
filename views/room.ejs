@@ -5,24 +5,33 @@
             <h2 class="title">
                 KILL OR DIE
             </h2>
+            <% if (roomData.isPlaying) { %>
+            <div class="led-green"></div>
+            Round has started
+            <% } else { %>
+            <div class="led-red"></div>
+            Round has not started yet
+            <% } %>
+        </div>
+        <div>
         </div>
     </div>
 </section>
 <section class="user-card">
     <div class="container">
         <% roomData.status.forEach(statusLine => { %>
-         <div><%=statusLine%></div>
+        <div><%=statusLine%></div>
         <% }) %>
         <h2 class="subtitle">ALIVE</h2>
         <div class="columns is-multiline">
             <% participants.forEach(participant => { %>
-                <% if(!participant.isKilled) { %>
-                    <%- include('./partials/userCard', {participant}) %>
-                    <% } %>
-                    <%})%>
-                </div>
-                <hr>
-                
+            <% if(!participant.isKilled) { %>
+            <%- include('./partials/userCard', {participant}) %>
+            <% } %>
+            <%})%>
+        </div>
+        <hr>
+
         <h2 class="subtitle dead">DEAD</h2>
         <div class="columns is-multiline">
             <%participants.forEach(participant => {%>
@@ -33,6 +42,13 @@
         </div>
 
     </div>
+    <div class="has-text-centered" style="margin-top: 50px">
+        <% if (self.autoRefresh) { %>
+            <meta http-equiv="refresh" content="6" />
+            <a class="bottom" href="/room/toggleAutoRefresh">Disable Auto-Refresh</a>
+        <% } else { %>
+            <a class="bottom" href="/room/toggleAutoRefresh">Enable Auto-Refresh</a>
+        <% } %> 
     </div>
-
+         
 </section>

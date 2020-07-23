@@ -78,4 +78,15 @@ router.get('/assassinate/:participantId', authenticateUser, roomIsPlaying, (req,
     })
 })
 
+router.get('/toggleAutoRefresh', authenticateUser, (req, res) => {
+    const {roomId, userId} = req.cookies
+    User.findById(userId, (err,foundUser) => {
+        if(err) return res.send("Couldn't toggle autorefresh")
+        foundUser.autoRefresh = !foundUser.autoRefresh
+        foundUser.save().then(() => {
+            return res.redirect('/room')
+        })
+    })
+})
+
 module.exports = router

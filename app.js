@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const Room = require('./models/Room');
@@ -16,7 +15,7 @@ mongoose.Promise = Promise;
 app.set("view engine", "ejs")
 app.use(cookieParser());
 app.use(express.static(__dirname + "/public"))
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   return res.render('index', {title: "Assassin Online Game"})

@@ -76,7 +76,7 @@ router.post('/assignRoles', authenticateAdmin, (req, res) => {
 
         Promise.all(queue)
         .then(() => {
-            Room.findByIdAndUpdate(roomId, {rolesAssigned: true}, (err, updatedRoom) => {
+            Room.findByIdAndUpdate(roomId, {rolesAssigned: true, status: ["Roles are assigned"]}, (err, updatedRoom) => {
                 return res.redirect('/roomAdmin')
             })
         })
@@ -84,7 +84,6 @@ router.post('/assignRoles', authenticateAdmin, (req, res) => {
             return res.send(err)
         })
     })
-
 })
 
 router.get('/startRound', authenticateAdmin, (req, res) => {
@@ -98,7 +97,7 @@ router.get('/startRound', authenticateAdmin, (req, res) => {
             canPlay: true
         }, (err, updatedParticipants) => {
             if (err) return res.send("Couldn't start round")
-            Room.updateOne({ _id: roomId }, { isPlaying: true }, (err, updatedRoom) => {
+            Room.updateOne({ _id: roomId }, { isPlaying: true, status: [] }, (err, updatedRoom) => {
                 if (err) return res.send("Couldn't start round")
                 return res.redirect('/roomAdmin')
             })
@@ -110,22 +109,20 @@ router.get('/getResults', authenticateAdmin, (req, res) => {
     const { roomId } = req.cookies
     User.find({roomId}, (err, participants) => {
         let assassinated = []
-        let maxVoted = participants[0]
-        let maxVotes = participants[0].votesRecieved
-        let isDraw = false
+        let maxVoted
+        let maxVotes = 0
+
         participants.forEach((participant, idx) => {
-            if(idx === 0) return
-            if(participant.isAssassinated && !participant.isKilled) {
-                participant.isKilled = true
-                assassinated.push(participant)
-            }
-            else if(participant.votesRecieved === maxVotes) {
-                isDraw = true
-            }
-            if(participant.votesRecieved > maxVotes) {
-                maxVoted = participant
-                maxVotes = participant.votesRecieved
-                isDraw = false
+            if(!participant.isKilled) {
+                if(participant.isAssassinated) {
+                    participant.isKilled = true
+                    participant.canPlay = false
+                    assassinated.push(participant)
+                }
+                if(participant.votesRecieved > maxVotes) {
+                    maxVoted = participant
+                    maxVotes = participant.votesRecieved
+                }
             }
         })
 
@@ -133,11 +130,18 @@ router.get('/getResults', authenticateAdmin, (req, res) => {
         assassinated.forEach(assassinatedPlayer => {
             status.push(`${assassinatedPlayer.username} was assassinated`)
         })
-        if(isDraw) {
-            status.push("Votes resulted in a draw, no one was killed")
-        } else {
-            maxVoted.isKilled = true
-            assassinated.push(maxVoted)
+
+        if(maxVotes > 0 && maxVoted) {
+            if(!maxVoted.isKilled) {
+                //if not already assassinated
+                status.push(`${maxVoted.username} was killed by villagers`)
+                maxVoted.isKilled = true
+                maxVoted.canPlay = false
+                assassinated.push(maxVoted)
+            }
+            else {
+                status.push(`${maxVoted.username} was killed by villagers as well`)
+            }
         }
 
         Promise.all(assassinated.map(player => player.save()))
@@ -157,5 +161,30 @@ router.get('/getResults', authenticateAdmin, (req, res) => {
     })
 })
 
+
+router.get('/resetRoom', authenticateAdmin, (req, res) => {
+    const { roomId } = req.cookies
+    Room.findByIdAndUpdate(roomId, {
+        isPlaying: false,
+        rolesAssigned: false,
+        status: ["Room resetted"]
+    },  (err, updatedRoom) => {
+        if(err) return res.send("Couldn't reset room")
+        User.updateMany({roomId}, {
+            role: "",
+            votesRecieved: 0,
+            canPlay: false,
+            isKilled: false,
+            isRevealed: false,
+            isAssassinated: false
+        }, (err, participants) => {
+            if(err) {
+                console.log(err)
+                return res.send("Couldn't reset room")
+            }
+            return res.redirect('/roomAdmin')
+        }) 
+    })
+})
 
 module.exports = router

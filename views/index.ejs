@@ -1,24 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assassin</title>
-</head>
-<body>
-    <form action="/createRoom" method="POST">
-        <input type="submit" value="Create Room">
-    </form>
-    <form action="/joinRoom" method="POST" >
-        Username: 
-        <input type="text" name="username">
-        Room Code:
-        <input type="text" name="roomCode">
-        <input type="submit" value="Join Room">
-    </form>
-</body>
-</html> -->
-
 <%- include('./partials/header') %>
 
 <section class="hero is-medium">
@@ -41,7 +20,7 @@
             <h2 class="subtitle">Join an existing Room</h2>
             <div class="field is-grouped">
                 <p class="control is-expanded">
-                    <input class="input" type="text" required name="username" placeholder="Username">
+                    <input class="input" type="text" required name="username" placeholder="Name">
                 </p>
                 <p class="control is-expanded">
                     <input class="input" type="text" required name="roomCode" placeholder="Room Code">
