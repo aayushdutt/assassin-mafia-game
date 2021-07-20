@@ -50,7 +50,7 @@
             <a href="/roomAdmin/resetRoom" class='button is-primary column' style="margin: 10px">Reset Room</a>
             <!-- <button class='button is-primary column' style="margin: 10px">Show Roles</button> -->
         </div>
-        <h2 class="subtitle">ALIVE</h2>
+        <h2 class="section-title alive">ALIVE</h2>
         <div class="columns is-multiline">
             <% participants.forEach(participant => { %>
             <% if(!participant.isKilled) { %>
@@ -60,7 +60,7 @@
         </div>
         <hr>
 
-        <h2 class="subtitle dead">DEAD</h2>
+        <h2 class="section-title dead">DEAD</h2>
         <div class="columns is-multiline">
             <%participants.forEach(participant => {%>
             <%if(participant.isKilled) {%>

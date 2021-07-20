@@ -1,18 +1,21 @@
 <div class="column post is-3">
-    <article class="columns is-multiline">
-      <div class="column is-12 post-img">
-        <img src="https://api.adorable.io/avatars/82/<%=participant.username%>.png" />
-      </div>
-      <div class="column is-12 featured-content">
-        <h3 class="heading post-category"><%=participant.role%></h3>
-        <h3 class="heading post-category">Votes: <%=participant.votesRecieved%></h3>
-        <% if (!participant.canPlay) { %>
-          <h3 class="heading post-category">Turn Played</h3>
-        <% } %>
-        <% if (participant.isAssassinated) { %>
-          <h3 class="heading post-category">Was Assassinated</h3>
-        <% } %>
-        <h1 class="title post-title"><%=participant.username%></h1>
-      </div>
-    </article>
+  <article class="columns is-multiline">
+    <div class="column is-12 post-img">
+      <img
+        src="https://avatars.dicebear.com/api/bottts/<%=participant.username%>.svg"
+      />
+    </div>
+    <div class="column is-12 featured-content">
+      <h3 class="heading post-category"><%=participant.role%></h3>
+      <h3 class="heading post-category">
+        Votes: <%=participant.votesRecieved%>
+      </h3>
+      <% if (!participant.canPlay) { %>
+      <h3 class="heading post-category">Turn Played</h3>
+      <% } %> <% if (participant.isAssassinated) { %>
+      <h3 class="heading post-category">Was Assassinated</h3>
+      <% } %>
+      <h1 class="title post-title"><%=participant.username%></h1>
+    </div>
+  </article>
 </div>
