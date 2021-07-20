@@ -29,10 +29,17 @@ hr {
 }
 
 .title,
-.subtitle {
-  color: white;
+.section-title {
+  color: rgb(194, 194, 194);
   text-align: center;
   font-size: 2.5rem;
+  margin-bottom: 25px;
+  display: block;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 0 !important;
 }
 
 .user-card {
@@ -68,8 +75,12 @@ hr {
   border: 1px solid;
 }
 
+.alive {
+  color: rgb(0, 92, 0);
+}
+
 .dead {
-  color: #840000;
+  color: #760000;
 }
 
 .disabled {
@@ -79,7 +90,7 @@ hr {
 }
 
 .input::placeholder {
-  color: rgba(0,0,0,0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .led-red {
@@ -88,7 +99,7 @@ hr {
   height: 12px;
   background-color: #940;
   border-radius: 50%;
-  box-shadow: #000 0 -1px 7px 1px, inset #600 0 -1px 9px, #F00 0 2px 12px;
+  box-shadow: #000 0 -1px 7px 1px, inset #600 0 -1px 9px, #f00 0 2px 12px;
 }
 
 .led-green {
@@ -97,5 +108,5 @@ hr {
   height: 12px;
   background-color: #690;
   border-radius: 50%;
-  box-shadow: #000 0 -1px 7px 1px, inset #460 0 -1px 9px, #7D0 0 2px 12px;
+  box-shadow: #000 0 -1px 7px 1px, inset #460 0 -1px 9px, #7d0 0 2px 12px;
 }

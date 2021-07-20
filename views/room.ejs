@@ -1,54 +1,42 @@
 <%- include('./partials/header') %>
 <section class="hero is-medium">
-    <div class="hero-body">
-        <div class="container has-text-centered">
-            <h2 class="title">
-                KILL OR DIE
-            </h2>
-            <% if (roomData.isPlaying) { %>
-            <div class="led-green"></div>
-            Round has started
-            <% } else { %>
-            <div class="led-red"></div>
-            Round has not started yet
-            <% } %>
-        </div>
-        <div>
-        </div>
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h2 class="title">KILL OR DIE</h2>
+      <h3 class="subtitle">Room Code - 65489</h3>
+      <% if (roomData.isPlaying) { %>
+      <div class="led-green"></div>
+      Round has started <% } else { %>
+      <div class="led-red"></div>
+      Round has not started yet <% } %>
     </div>
+    <div></div>
+  </div>
 </section>
 <section class="user-card">
-    <div class="container">
-        <% roomData.status.forEach(statusLine => { %>
-        <div><%=statusLine%></div>
-        <% }) %>
-        <h2 class="subtitle">ALIVE</h2>
-        <div class="columns is-multiline">
-            <% participants.forEach(participant => { %>
-            <% if(!participant.isKilled) { %>
-            <%- include('./partials/userCard', {participant}) %>
-            <% } %>
-            <%})%>
-        </div>
-        <hr>
-
-        <h2 class="subtitle dead">DEAD</h2>
-        <div class="columns is-multiline">
-            <%participants.forEach(participant => {%>
-            <%if(participant.isKilled) {%>
-            <%- include('./partials/killedUserCard', {participant}) %>
-            <%}%>
-            <%})%>
-        </div>
-
+  <div class="container">
+    <% roomData.status.forEach(statusLine => { %>
+    <div><%=statusLine%></div>
+    <% }) %>
+    <h2 class="section-title alive">ALIVE</h2>
+    <div class="columns is-multiline">
+      <% participants.forEach(participant => { %> <% if(!participant.isKilled) {
+      %> <%- include('./partials/userCard', {participant}) %> <% } %> <%})%>
     </div>
-    <div class="has-text-centered" style="margin-top: 50px">
-        <% if (self.autoRefresh) { %>
-            <meta http-equiv="refresh" content="6" />
-            <a class="bottom" href="/room/toggleAutoRefresh">Disable Auto-Refresh</a>
-        <% } else { %>
-            <a class="bottom" href="/room/toggleAutoRefresh">Enable Auto-Refresh</a>
-        <% } %> 
+    <hr />
+
+    <h2 class="section-title dead">DEAD</h2>
+    <div class="columns is-multiline">
+      <%participants.forEach(participant => {%> <%if(participant.isKilled) {%>
+      <%- include('./partials/killedUserCard', {participant}) %> <%}%> <%})%>
     </div>
-         
+  </div>
+  <div class="has-text-centered" style="margin-top: 50px">
+    <% if (self.autoRefresh) { %>
+    <meta http-equiv="refresh" content="6" />
+    <a class="bottom" href="/room/toggleAutoRefresh">Disable Auto-Refresh</a>
+    <% } else { %>
+    <a class="bottom" href="/room/toggleAutoRefresh">Enable Auto-Refresh</a>
+    <% } %>
+  </div>
 </section>

@@ -1,7 +1,7 @@
 <div class="column post is-3">
   <article class="columns is-multiline">
     <div class="column is-12 post-img">
-      <img src="https://api.adorable.io/avatars/82/<%=participant.username%>.png" />
+      <img src="https://avatars.dicebear.com/api/bottts/<%=participant.username%>.svg" /> 
     </div>
     <div class="column is-12 featured-content">
       <% if (self._id == participant._id || self.role === 'assassin' && participant.role === 'assassin' || self.role === 'seer' && participant.isRevealed) { %>
