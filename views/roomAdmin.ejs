@@ -11,9 +11,6 @@
 </section>
 <section class="user-card">
     <div class="container">
-        <% roomData.status.forEach(statusLine => { %>
-            <div><%=statusLine%></div>
-        <% }) %>
         <% if (true || !roomData.rolesAssigned) { %>
             <form action="/roomAdmin/assignRoles" method="POST" style="width: 50%; margin-bottom: 30px;">
                 <div class="field is-grouped">
@@ -50,6 +47,11 @@
             <a href="/roomAdmin/resetRoom" class='button is-primary column' style="margin: 10px">Reset Room</a>
             <!-- <button class='button is-primary column' style="margin: 10px">Show Roles</button> -->
         </div>
+
+        <% roomData.status.forEach(statusLine => { %>
+        <div><%=statusLine%></div>
+        <% }) %>
+
         <h2 class="section-title alive">ALIVE</h2>
         <div class="columns is-multiline">
             <% participants.forEach(participant => { %>

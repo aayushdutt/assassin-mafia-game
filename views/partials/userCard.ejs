@@ -10,7 +10,7 @@
       <h1 class="title post-title"><%=participant.username%></h1>
 
       <% if(self.role === 'villager') { %>
-      <a href="/room/vote/<%=participant._id%>" <% if(roomData.isPlaying && self.canPlay && !self.isKilled) { %> class="button is-primary">Vote</a>
+      <a href="/room/vote/<%=participant._id%>" <% if(roomData.isPlaying && self.canPlay ) { %> class="button is-primary">Vote</a>
           <% } else {%>
           class="button is-primary disabled" disabled>Vote</a>
           <% }%>
