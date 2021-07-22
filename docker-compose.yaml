@@ -8,12 +8,13 @@ services:
       - "80:80"
     links:
       - mongo
-    environment: 
+    environment:
       - MONGO_URI=mongodb://mongo:27017/assassin
       - PORT=80
   mongo:
     container_name: mongo
     image: mongo
+    restart: always
     volumes:
       - ./data:/data/db
     ports:
